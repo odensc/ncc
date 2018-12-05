@@ -111,12 +111,13 @@ module.exports = async (
           use: [{ loader: __dirname + "/loaders/ts-loader.js" }]
         },
         {
+        ...minify ? [{
           test: /\.(js|mjs)$/,
           use: [{
             loader: __dirname + "/loaders/terser-loader.js",
             options: { sourceMap }
           }]
-        }
+        }] : []
       ]
     },
     plugins: [
