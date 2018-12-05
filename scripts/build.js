@@ -36,6 +36,10 @@ async function main() {
     __dirname + "/../src/loaders/shebang-loader"
   );
 
+  const { code: terserLoader, assets: terserLoaderAssets } = await ncc(
+    __dirname + "/../src/loaders/terser-loader"
+  );
+
   const { code: tsLoader, assets: tsLoaderAssets } = await ncc(
     __dirname + "/../src/loaders/ts-loader"
   );
@@ -50,6 +54,7 @@ async function main() {
     Object.keys(nodeLoaderAssets).length ||
     Object.keys(relocateLoaderAssets).length ||
     Object.keys(shebangLoaderAssets).length ||
+    Object.keys(terserLoaderAssets).length ||
     Object.keys(tsLoaderAssets).length ||
     Object.keys(sourcemapAssets).length
   ) {
@@ -64,6 +69,7 @@ async function main() {
   writeFileSync(__dirname + "/../dist/ncc/loaders/node-loader.js", nodeLoader);
   writeFileSync(__dirname + "/../dist/ncc/loaders/relocate-loader.js", relocateLoader);
   writeFileSync(__dirname + "/../dist/ncc/loaders/shebang-loader.js", shebangLoader);
+  writeFileSync(__dirname + "/../dist/ncc/loaders/terser-loader.js", terserLoader);  
   writeFileSync(__dirname + "/../dist/ncc/loaders/ts-loader.js", tsLoader);
 
   // copy webpack buildin
