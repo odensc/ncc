@@ -101,7 +101,10 @@ module.exports = async (
         },
         {
           test: /\.(js|mjs)$/,
-          use: [{
+          use: [...minify ? [{
+            loader: __dirname + "/loaders/terser-loader.js",
+            options: { sourceMap }
+          }] : [], {
             loader: __dirname + "/loaders/relocate-loader.js",
             options: { assetNames, assets }
           }]
@@ -109,15 +112,7 @@ module.exports = async (
         {
           test: /\.tsx?$/,
           use: [{ loader: __dirname + "/loaders/ts-loader.js" }]
-        },
-        {
-        ...minify ? [{
-          test: /\.(js|mjs)$/,
-          use: [{
-            loader: __dirname + "/loaders/terser-loader.js",
-            options: { sourceMap }
-          }]
-        }] : []
+        }
       ]
     },
     plugins: [
